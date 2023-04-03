@@ -1,11 +1,11 @@
 package com.example.demo.Models;
 
 import lombok.Data;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "user")
-//@Data
 public class User {
     @Id
     private String id;
@@ -18,6 +18,10 @@ public class User {
 
     public User() {
 
+    }
+    public User(String username, int age){
+        this.username = username;
+        this.age = age;
     }
 
     public User(String id, String username, String name, int age,
