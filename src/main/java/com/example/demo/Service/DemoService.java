@@ -16,12 +16,13 @@ public class DemoService {
    @Autowired
    private DemoRepository demoRepository;
 
-    public ResponseEntity<Void> addUser(User user){
+    public ResponseEntity<String> addUser(User user){
         demoRepository.save(user);
-        return new ResponseEntity("New use has been created.", HttpStatus.CREATED);
+        return new ResponseEntity("New user has been created...",
+                HttpStatus.CREATED);
     }
 
-    public ResponseEntity<Void> countVowelsAndSpecialChars(String string){
+    public ResponseEntity<String> countVowelsAndSpecialChars(String string){
         HashSet<Character> setOfCharacter = new HashSet<>();
         int n = string.length();
         int vowels = 0;
@@ -46,12 +47,20 @@ public class DemoService {
             }
         }
         int totalCount = vowels + specialChars;
-        System.out.println("Total count of vowels and special characters"+totalCount);
-        return new ResponseEntity("",HttpStatus.OK);
+        String result = "Total count of vowels and special characters : "
+                +String.valueOf(totalCount);
+        return new ResponseEntity(result,HttpStatus.OK);
     }
 
-    public ResponseEntity<Void> updateUserDetails(String username){
-        User user = demoRepository.findByUsername(username).get();
+    public ResponseEntity<String> getUserDetails(String username){
+        User user = demoRepository.findByUsername(username);
+        String userDetails = user.toString();
+        return new ResponseEntity<>("Details of user is :- "+userDetails,
+                HttpStatus.FOUND);
+    }
+
+    public ResponseEntity<String> updateUserDetails(String username){
+        User user = demoRepository.findByUsername(username);
         HashSet<Character> setOfVowels = new HashSet<>();
         setOfVowels.add('A');
         setOfVowels.add('E');
@@ -91,8 +100,8 @@ public class DemoService {
         return new ResponseEntity("Your details has been updated.",HttpStatus.OK);
     }
 
-    public ResponseEntity<Void> deleteUser(String username){
-        User user = demoRepository.findByUsername(username).get();
+    public ResponseEntity<String> deleteUser(String username){
+        User user = demoRepository.findByUsername(username);
         demoRepository.delete(user);
         return new ResponseEntity("Your credentials has been removed.",HttpStatus.OK);
     }

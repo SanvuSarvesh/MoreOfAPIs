@@ -17,21 +17,29 @@ public class DemoController {
     private DemoService demoService;
 
     @PostMapping("add_user")
-    public ResponseEntity<Void> addUser(@RequestBody User user){
+    public ResponseEntity<String> addUser(@RequestBody User user){
         return demoService.addUser(user);
     }
     @GetMapping("/getResult")
-    public ResponseEntity<Void> countVowelsAndSpecialChars(@RequestParam("str") String string ){
+    public ResponseEntity<String> countVowelsAndSpecialChars(@RequestParam("str")
+                                                               String string ){
         return demoService.countVowelsAndSpecialChars(string);
     }
 
+    @GetMapping("/getUserDetails{username}")
+    public ResponseEntity<String> getUserDetails(@PathVariable("username")
+                                                     String username){
+        return demoService.getUserDetails(username);
+    }
+
     @PutMapping("/update_details")
-    public ResponseEntity<Void> updateUserDetails(@RequestParam("username") String username){
+    public ResponseEntity<String> updateUserDetails(@RequestParam("username")
+                                                      String username){
         return demoService.updateUserDetails(username);
     }
 
     @DeleteMapping("/delete_user")
-    public ResponseEntity<Void> deleteUser(@RequestParam("username") String username){
+    public ResponseEntity<String> deleteUser(@RequestParam("username") String username){
         return demoService.deleteUser(username);
     }
 }
